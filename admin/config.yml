@@ -1,0 +1,1196 @@
+backend:
+  name: git-gateway
+  accept_roles:
+    - admin
+    - editor
+  branch: master
+media_folder: theme/assets/images
+public_folder: /assets/images
+collections:
+  - name: pages
+    label: Pages
+    identifier_field: title
+    extension: md
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    folder: cms/pages
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '{{slug}}.html'
+      - &ref_0
+        label: Seo
+        name: seo
+        widget: object
+        collapsed: true
+        fields:
+          - label: Title
+            name: title
+            widget: string
+            required: false
+          - label: Description
+            name: description
+            widget: string
+            required: false
+          - label: No index
+            name: noindex
+            widget: boolean
+            default: false
+            required: false
+          - label: Open Graph Title
+            name: og:title
+            widget: string
+            required: false
+          - label: Open Graph Image
+            name: og:image
+            widget: image
+            required: false
+            media_library:
+              config:
+                multiple: false
+          - label: Twitter Title
+            name: twitter:title
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Card
+            name: twitter:card
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Site
+            name: twitter:site
+            widget: string
+            required: false
+          - label: Twitter Creator
+            name: twitter:creator
+            widget: string
+            required: false
+          - label: Additional HTML tags
+            name: additional_tags
+            widget: text
+            required: false
+  - name: team
+    label: Teams
+    folder: cms/team
+    create: true
+    identifier_field: name
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - hint: ''
+        name: title
+        label: Name
+        widget: string
+        required: true
+      - hint: ''
+        name: created-on
+        label: Created On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: updated-on
+        label: Updated On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: published-on
+        label: Published On
+        widget: datetime
+        required: false
+      - hint: 1:1 ratio
+        name: f_headshot
+        label: Headshot
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: 1:1 ratio
+        name: f_action-shot
+        label: Action Shot
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: Background 1 or 2
+        name: f_background
+        label: Background
+        widget: boolean
+        required: false
+        default: false
+      - label: Tags
+        widget: hidden
+        name: tags
+        default: team
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '[team].html'
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - *ref_0
+  - label: Theme Settings
+    name: settings
+    identifier_field: title
+    extension: json
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    files:
+      - label: General
+        name: site
+        file: cms/_data/settings/site.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: General
+          - hint: Full domain url (needed for a correct sitemap file)
+            name: domain
+            label: Domain
+            widget: string
+            required: false
+          - name: favicon
+            label: Favicon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: apple_touch_icon
+            label: Apple Touch Icon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: header_additional_content
+            label: Additional Content Header
+            hint: Content here will be placed before </head> tag
+            widget: text
+            required: false
+          - name: footer_additional_content
+            label: Additional Content Footer
+            hint: Content here will be placed before </body> tag
+            widget: text
+            required: false
+          - name: images_optimization
+            label: Images Optimization
+            widget: object
+            collapsed: false
+            fields:
+              - label: Image Formats
+                name: formats
+                widget: select
+                multiple: true
+                options:
+                  - label: Avif
+                    value: avif
+                  - label: Webp
+                    value: webp
+              - label: Image Dimensions
+                name: dimensions
+                widget: select
+                multiple: true
+                options:
+                  - label: '500'
+                    value: 500
+                  - label: '800'
+                    value: 800
+                  - label: '1080'
+                    value: 1080
+                  - label: '1600'
+                    value: 1600
+                  - label: '2000'
+                    value: 2000
+                  - label: '2600'
+                    value: 2600
+      - label: Colors
+        name: colors
+        file: cms/_data/colors.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Colors
+      - label: Texts
+        name: texts
+        file: cms/_data/texts.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Texts
+          - hint: 'Original text: Services, key: 560f747e'
+            label: Text
+            name: 560f747e
+            widget: string
+          - hint: 'Original text: Process, key: 50c5b64f'
+            label: Text
+            name: 50c5b64f
+            widget: string
+          - hint: 'Original text: Benefits, key: 685742dc'
+            label: Text
+            name: 685742dc
+            widget: string
+          - hint: 'Original text: Learn More, key: -52bd880f'
+            label: Text
+            name: '-52bd880f'
+            widget: string
+          - hint: 'Original text: FAQ, key: 10ef6'
+            label: Text
+            name: 10ef6
+            widget: string
+          - hint: 'Original text: Case Studies, key: -667f9cc9'
+            label: Text
+            name: '-667f9cc9'
+            widget: string
+          - hint: 'Original text: Inflation Reduction Act, key: -752d3f71'
+            label: Text
+            name: '-752d3f71'
+            widget: string
+          - hint: 'Original text: About Us, key: 645efc51'
+            label: Text
+            name: 645efc51
+            widget: string
+          - hint: 'Original text: Trade Partners, key: -64fad3d9'
+            label: Text
+            name: '-64fad3d9'
+            widget: string
+          - hint: 'Original text: Contact, key: -64104400'
+            label: Text
+            name: '-64104400'
+            widget: string
+          - hint: 'Original text: Get Started, key: -364d0a89'
+            label: Text
+            name: '-364d0a89'
+            widget: string
+          - hint: >-
+              Original text: Take the Next Step Toward a Clean Energy Home, key:
+              -56e5d5b9
+            label: Text
+            name: '-56e5d5b9'
+            widget: string
+          - hint: 'Original text: Efficient, key: 26b69c01'
+            label: Text
+            name: 26b69c01
+            widget: string
+          - hint: 'Original text: Sustainable, key: 5d21d5dd'
+            label: Text
+            name: 5d21d5dd
+            widget: string
+          - hint: 'Original text: Healthy, key: -6d5c1e83'
+            label: Text
+            name: '-6d5c1e83'
+            widget: string
+          - hint: >-
+              Original text: From Design Through Install, We Do It All, key:
+              74f6d1d7
+            label: Text
+            name: 74f6d1d7
+            widget: string
+          - hint: 'Original text: Donec ligula., key: 68df862f'
+            label: Text
+            name: 68df862f
+            widget: string
+          - hint: >-
+              Original text: Praesent in quam felis. Maecenas non malesuada
+              massa. Donec a rutrum nunc. Vestibulum nec massa ut risus lacinia
+              congue condimentum eu nunc. , key: 5e41e41a
+            label: Text
+            name: 5e41e41a
+            widget: text
+          - hint: 'Original text: Free Your Home From Fossil Fuels, key: 194992b7'
+            label: Text
+            name: 194992b7
+            widget: string
+          - hint: >-
+              Original text: Did you know you can make a significant impact on
+              climate change by removing the fossil fuels that burn inside your
+              house? When you transition to electric heating & cooling and power
+              your home with solar, you reduce your carbon footprint and create
+              a healthier, more efficient, and more comfortable home., key:
+              -39cd8195
+            label: Text
+            name: '-39cd8195'
+            widget: text
+          - hint: "Original text: Where Do I\_Start?, key: 69aa7670"
+            label: Text
+            name: 69aa7670
+            widget: string
+          - hint: 'Original text: Why Go Electric?, key: 4e553f02'
+            label: Text
+            name: 4e553f02
+            widget: string
+          - hint: >-
+              Original text: Transition to highly efficient all-electric
+              appliances and your home will benefit from using renewable energy.
+              You reduce your carbon footprint, while living in a healthier,
+              more comfortable home., key: -3607fcb2
+            label: Text
+            name: '-3607fcb2'
+            widget: text
+          - hint: 'Original text: Energy Efficiency, key: -66d31cff'
+            label: Text
+            name: '-66d31cff'
+            widget: string
+          - hint: >-
+              Original text: Your home will be up to 4x more energy efficient
+              with electric heat pump technology, giving you peace of mind that
+              your hard-earned money isn’t being wasted., key: -4734a18d
+            label: Text
+            name: '-4734a18d'
+            widget: text
+          - hint: 'Original text: Indoor Air Quality, key: 7245c5bc'
+            label: Text
+            name: 7245c5bc
+            widget: string
+          - hint: >-
+              Original text: When you eliminate fossil fuels and add quality
+              ventilation systems, the indoor air quality in your home will
+              greatly improve., key: -54cb8b6a
+            label: Text
+            name: '-54cb8b6a'
+            widget: text
+          - hint: 'Original text: Comfort, key: -64248254'
+            label: Text
+            name: '-64248254'
+            widget: string
+          - hint: >-
+              Original text: Quiet, consistent heating and cooling coming from
+              an electric heat pump ensures you will be able to comfortably
+              enjoy the temperature in every room of your home year-round., key:
+              -2a7fb945
+            label: Text
+            name: '-2a7fb945'
+            widget: text
+          - hint: 'Original text: Start Your Journey to Net Zero Today, key: fcb6022'
+            label: Text
+            name: fcb6022
+            widget: string
+          - hint: 'Original text: We Make it Easy for You, key: -356d6521'
+            label: Text
+            name: '-356d6521'
+            widget: string
+          - hint: >-
+              Original text: With our no-hassle process, you’ll receive a
+              proposal before we visit your home, so you can decide whether
+              going all-electric is a good fit. Our homegrown technology
+              evaluates your climate, unique home attributes, roof space, &
+              energy usage to calculate an optimal plan to electrify your
+              appliances & run your home off the sun., key: e3f42a
+            label: Text
+            name: e3f42a
+            widget: text
+          - hint: 'Original text: Submit Information, key: -44829edc'
+            label: Text
+            name: '-44829edc'
+            widget: string
+          - hint: >-
+              Original text: Answer a few simple questions about your home & we
+              take care of the rest., key: 64f0efb1
+            label: Text
+            name: 64f0efb1
+            widget: string
+          - hint: 'Original text: Receive Proposal, key: -5dc3f031'
+            label: Text
+            name: '-5dc3f031'
+            widget: string
+          - hint: >-
+              Original text: We’ll create a holistic design for the best
+              heating, cooling, ventilation & solar system for your house., key:
+              -2a36bf83
+            label: Text
+            name: '-2a36bf83'
+            widget: text
+          - hint: 'Original text: Home Visit, key: 5391deca'
+            label: Text
+            name: 5391deca
+            widget: string
+          - hint: >-
+              Original text: We briefly assess your house to finalize the
+              proposal & determine optimal equipment location., key: 518d159c
+            label: Text
+            name: 518d159c
+            widget: text
+          - hint: 'Original text: Installation, key: -7cc74da6'
+            label: Text
+            name: '-7cc74da6'
+            widget: string
+          - hint: >-
+              Original text: For your convenience, we manage all aspects of the
+              installation work., key: 3f527e6d
+            label: Text
+            name: 3f527e6d
+            widget: string
+          - hint: 'Original text: Don''t Just Take Our Word For It, key: 34802d6f'
+            label: Text
+            name: 34802d6f
+            widget: string
+          - hint: >-
+              Original text: “We are so pleased with the work you have done and
+              are happy with the improved comfort of the house. In addition to
+              the comfort of the even temperatures and quiet systems, we
+              perceive a little more humidity and less dusty duct stuff being
+              blown around.”, key: -485171e0
+            label: Text
+            name: '-485171e0'
+            widget: text
+          - hint: 'Original text: Lo Faber, key: 1501917'
+            label: Text
+            name: '1501917'
+            widget: string
+          - hint: 'Original text: Irving Plaza, NY, key: f060600'
+            label: Text
+            name: f060600
+            widget: string
+          - hint: >-
+              Original text: “I'd absolutely recommend Helio! I really trusted
+              them and knew that they were doing high quality work! The staff
+              were wonderful and the job was done quickly and efficiently. They
+              worked with my budget and added on some little fixes that I was
+              not expecting. Thanks so much!”, key: -68289cc7
+            label: Text
+            name: '-68289cc7'
+            widget: text
+          - hint: 'Original text: Stephen Malkmus, key: 1666643d'
+            label: Text
+            name: 1666643d
+            widget: string
+          - hint: 'Original text: Stockton, CA, key: 5f85b8ef'
+            label: Text
+            name: 5f85b8ef
+            widget: string
+          - hint: >-
+              Original text: “You explained everything, performed the work
+              quickly, quietly, and cleanly and took away any mess. We’re
+              satisfied with the product, especially in light of the heat that
+              started right after you finished. We’d recommend your company to
+              others and use you again for additional work when we need it.”,
+              key: -3b229a76
+            label: Text
+            name: '-3b229a76'
+            widget: text
+          - hint: 'Original text: Jim Conlon, key: -4267bbe5'
+            label: Text
+            name: '-4267bbe5'
+            widget: string
+          - hint: 'Original text: Silver Spring, MD, key: -64002375'
+            label: Text
+            name: '-64002375'
+            widget: string
+          - hint: 'Original text: Why Elysian?, key: 3f5e67c2'
+            label: Text
+            name: 3f5e67c2
+            widget: string
+          - hint: 'Original text: Whole Home Approach, key: -69124d00'
+            label: Text
+            name: '-69124d00'
+            widget: string
+          - hint: >-
+              Original text: We design an integrated plan for your entire house,
+              so you don't have to manage multiple contractors. You can be
+              confident the whole system is sized appropriately for your unique
+              house., key: 6a9fe164
+            label: Text
+            name: 6a9fe164
+            widget: text
+          - hint: 'Original text: Clean Energy Expertise, key: -6163dc70'
+            label: Text
+            name: '-6163dc70'
+            widget: string
+          - hint: >-
+              Original text: With 20+ years of experience in the clean energy
+              industry, we have extensive expertise installing high efficiency
+              electric systems. We are certified by our equipment manufacturer
+              and your utility provider., key: -cc00276
+            label: Text
+            name: '-cc00276'
+            widget: text
+          - hint: 'Original text: Roadmap to Net Zero, key: 2980cf8c'
+            label: Text
+            name: 2980cf8c
+            widget: string
+          - hint: >-
+              Original text: Whether you do it all at once or tackle one step at
+              a time, we’ll provide you with a full roadmap so you have a plan
+              to reach your goal., key: -1c87ea8f
+            label: Text
+            name: '-1c87ea8f'
+            widget: text
+          - hint: 'Original text: ©2022 Elysian Energy, key: 1ce3ccac'
+            label: Text
+            name: 1ce3ccac
+            widget: string
+          - hint: >-
+              Original text: If you edit styles here, they will change across
+              the site, key: 15301c6d
+            label: Text
+            name: 15301c6d
+            widget: string
+          - hint: 'Original text: H1, key: 8e9'
+            label: Text
+            name: '8e9'
+            widget: string
+          - hint: 'Original text: Lorem ipsum dolor sit amet, key: -734fd222'
+            label: Text
+            name: '-734fd222'
+            widget: string
+          - hint: 'Original text: H2, key: 8ea'
+            label: Text
+            name: 8ea
+            widget: string
+          - hint: 'Original text: H3, key: 8eb'
+            label: Text
+            name: 8eb
+            widget: string
+          - hint: 'Original text: H4, key: 8ec'
+            label: Text
+            name: 8ec
+            widget: string
+          - hint: 'Original text: H5, key: 8ed'
+            label: Text
+            name: 8ed
+            widget: string
+          - hint: 'Original text: H6, key: 8ee'
+            label: Text
+            name: 8ee
+            widget: string
+          - hint: >-
+              Original text: Lorem ipsum dolor sit amet, consectetur adipiscing
+              elit. Suspendisse varius enim in eros elementum tristique. Duis
+              cursus, mi quis viverra ornare, eros dolor interdum nulla, ut
+              commodo diam libero vitae erat., key: -3910d286
+            label: Text
+            name: '-3910d286'
+            widget: text
+          - hint: 'Original text: Paragraph, key: -145e16b2'
+            label: Text
+            name: '-145e16b2'
+            widget: string
+          - hint: 'Original text: Block Quote, key: 3f3470e9'
+            label: Text
+            name: 3f3470e9
+            widget: string
+          - hint: 'Original text: Lorem ipsum, key: -1b542585'
+            label: Text
+            name: '-1b542585'
+            widget: string
+          - hint: 'Original text: Text Link, key: 3610230d'
+            label: Text
+            name: 3610230d
+            widget: string
+          - hint: 'Original text: View Project, key: 4132989e'
+            label: Text
+            name: 4132989e
+            widget: string
+          - hint: 'Original text: Button, key: 77471352'
+            label: Text
+            name: '77471352'
+            widget: string
+          - hint: 'Original text: It’s simple, really., key: -dc6639e'
+            label: Text
+            name: '-dc6639e'
+            widget: string
+          - hint: >-
+              Original text: Electrify Your Home in Just Four Steps, key:
+              47db41c1
+            label: Text
+            name: 47db41c1
+            widget: string
+          - hint: 'Original text: How it works., key: 7aa15d91'
+            label: Text
+            name: 7aa15d91
+            widget: string
+          - hint: 'Original text: You Submit Your Information, key: -3beb817a'
+            label: Text
+            name: '-3beb817a'
+            widget: string
+          - hint: >-
+              Original text: Curabitur eu vestibulum mi. Nulla auctor risus sed
+              odio commodo faucibus. Nullam sed lectus et odio venenatis
+              suscipit eget et neque. Quisque luctus libero nec nisl lacinia
+              hendrerit. Aliquam a sollicitudin arcu. , key: 6349a381
+            label: Text
+            name: 6349a381
+            widget: text
+          - hint: 'Original text: We Create Your Proposal, key: 7d4dbe2d'
+            label: Text
+            name: 7d4dbe2d
+            widget: string
+          - hint: >-
+              Original text: Suspendisse ultrices dui id dignissim consectetur.
+              Nulla id lorem ac elit finibus malesuada at a risus. Vestibulum
+              ante ipsum primis in faucibus orci luctus et ultrices posuere
+              cubilia curae; Vestibulum ante ipsum primis in faucibus orci
+              luctus et ultrices posuere cubilia curae; Vivamus est leo, rutrum
+              non malesuada non, porttitor non ante. Cras blandit ligula in
+              felis dictum, at maximus justo ultrices., key: -406b604
+            label: Text
+            name: '-406b604'
+            widget: text
+          - hint: 'Original text: We Visit Your Home, key: 7c1d62c5'
+            label: Text
+            name: 7c1d62c5
+            widget: string
+          - hint: >-
+              Original text: Aenean odio massa, sollicitudin eu mi vitae,
+              pellentesque rutrum nibh. Sed at mollis leo. Morbi elit risus,
+              feugiat in luctus et, faucibus sit amet lorem. Suspendisse eu
+              dignissim mauris, sit amet rutrum ligula. Morbi mauris dui, varius
+              ac porttitor ac, dignissim at neque. Ut in viverra sapien.
+              Phasellus et turpis interdum, consequat neque ut, placerat sem.
+              Pellentesque tincidunt volutpat nisi. Fusce massa lectus, porta
+              eget mollis et, blandit sit amet arcu. Quisque in est mauris.
+              Vivamus id nibh vestibulum, maximus lorem non, porttitor tellus.
+              Donec nec sem in libero finibus consectetur., key: 390a0ab
+            label: Text
+            name: 390a0ab
+            widget: text
+          - hint: 'Original text: We Install Everything, key: -3ebb2ef6'
+            label: Text
+            name: '-3ebb2ef6'
+            widget: string
+          - hint: >-
+              Original text: Phasellus volutpat lectus non rutrum feugiat. Etiam
+              vel fringilla velit. Donec dui urna, auctor id sapien non,
+              imperdiet mollis ligula. Ut venenatis ex sem. Lorem ipsum dolor
+              sit amet, consectetur adipiscing elit. Nullam ut nisl ligula. In
+              porta vulputate lorem at iaculis. Vivamus mauris augue, lobortis
+              ac nisl in, accumsan mattis risus., key: 581856fc
+            label: Text
+            name: 581856fc
+            widget: text
+          - hint: >-
+              Original text: That’s it! Enjoy a new healthier, more comfortable,
+              and carbon neutral lifestyle., key: -39772f84
+            label: Text
+            name: '-39772f84'
+            widget: string
+          - hint: >-
+              Original text: Ready to turn your house into a Elysian Home?, key:
+              -5e095d18
+            label: Text
+            name: '-5e095d18'
+            widget: string
+          - hint: 'Original text: The Benefits of Going Electric, key: 27c0fb17'
+            label: Text
+            name: 27c0fb17
+            widget: string
+          - hint: 'Original text: Climate Impact, key: 23c9e1e1'
+            label: Text
+            name: 23c9e1e1
+            widget: string
+          - hint: 'Original text: Better Air, Better Health, key: -6a9e34c2'
+            label: Text
+            name: '-6a9e34c2'
+            widget: string
+          - hint: 'Original text: Prepared for the Future, key: 7ed2fe4c'
+            label: Text
+            name: 7ed2fe4c
+            widget: string
+          - hint: 'Original text: Energy Efficiency & Savings, key: -34166bc0'
+            label: Text
+            name: '-34166bc0'
+            widget: string
+          - hint: 'Original text: Comfortable Temperatures, key: -61307587'
+            label: Text
+            name: '-61307587'
+            widget: string
+          - hint: >-
+              Original text: Our mission is to eliminate the carbon footprint of
+              every home by electrifying America., key: 2c8efd11
+            label: Text
+            name: 2c8efd11
+            widget: string
+          - hint: >-
+              Original text: We are an early stage venture backed startup with
+              tremendous early traction. We are building an electrification
+              technology platform that will help guide 100 million homes in the
+              US towards electrification. We are looking for smart, driven, and
+              collaborative team members who believe that the time to make a
+              difference is now., key: -20c72727
+            label: Text
+            name: '-20c72727'
+            widget: text
+          - hint: 'Original text: Join the Movement!, key: 5b7a7bed'
+            label: Text
+            name: 5b7a7bed
+            widget: string
+          - hint: 'Original text: Meet the Team, key: -39c9f9b'
+            label: Text
+            name: '-39c9f9b'
+            widget: string
+          - hint: 'Original text: No items found., key: 3d503d2b'
+            label: Text
+            name: 3d503d2b
+            widget: string
+      - label: Links
+        name: links
+        file: cms/_data/links.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Links
+          - hint: 'Original link: #, key: 23'
+            label: Link
+            name: '23'
+            widget: string
+          - hint: 'Original link: /process/, key: -358ef31'
+            label: Link
+            name: '-358ef31'
+            widget: string
+          - hint: 'Original link: /benefits/, key: 49abda4'
+            label: Link
+            name: 49abda4
+            widget: string
+          - hint: 'Original link: /about-us/, key: -766f6c3e'
+            label: Link
+            name: '-766f6c3e'
+            widget: string
+          - hint: 'Original link: https://www.heliohome.io/process, key: -4adfa45a'
+            label: Link
+            name: '-4adfa45a'
+            widget: string
+          - hint: 'Original link: /, key: 2f'
+            label: Link
+            name: 2f
+            widget: string
+          - hint: >-
+              Original link: https://youtube.com/c/+Encorebilliards, key:
+              -12189c7d
+            label: Link
+            name: '-12189c7d'
+            widget: string
+          - hint: >-
+              Original link: https://www.instagram.com/encore.billiards/, key:
+              -7c3cb63d
+            label: Link
+            name: '-7c3cb63d'
+            widget: string
+          - hint: 'Original link: https://twitter.com/EncoreBilliards, key: -77aacafe'
+            label: Link
+            name: '-77aacafe'
+            widget: string
+          - hint: >-
+              Original link: https://facebook.com/EncoreBilliards, key:
+              -75c1dfad
+            label: Link
+            name: '-75c1dfad'
+            widget: string
+      - label: Images
+        name: images
+        file: cms/_data/images.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Images
+          - label: Image
+            name: 3bdd220f
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i4d6f35e4
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 5c1309f7
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i1eca378e
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 61dc05d2
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i5a8c8e0a
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 4d154cfe
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 7ddf4bb7
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-19132e72'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: c0db373
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-1ca84a23'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-235b8a54'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 4cd535e2
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 3749a0bc
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-5da15561'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-22fd8c60'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-1d6f0ab5'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-66f61ff7'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-2b1823ed'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 4360af8
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-4d6f35e4'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-32b4953'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 63d3600f
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-137c0172'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 2dcab44e
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 36c5e456
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-1eca378e'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-5e1cf972'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-5a8c8e0a'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+publish_mode: editorial_workflow
